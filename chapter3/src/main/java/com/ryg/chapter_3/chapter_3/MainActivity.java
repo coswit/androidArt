@@ -45,8 +45,8 @@ public class MainActivity extends Activity {
 
     public void onButtonClick(View v) {
         if (v.getId() == R.id.button1) {
-//            Intent intent = new Intent(this, TestActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, TestActivity.class);
+            startActivity(intent);
             testThreadLocal();
         } else if (v.getId() == R.id.button2) {
             Intent intent = new Intent(this, DemoActivity_1.class);
