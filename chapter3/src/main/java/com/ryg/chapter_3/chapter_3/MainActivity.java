@@ -1,12 +1,20 @@
 package com.ryg.chapter_3.chapter_3;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.ClipDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.ryg.chapter_3.R;
@@ -54,6 +62,9 @@ public class MainActivity extends Activity {
             startService(intent);
             intent.putExtra(LocalIntentService.DATA,"com.ryg.action.TASK2");
             startService(intent);
+        }else if (v.getId() == R.id.button5){
+            permissionWindowRequest();
+            testWindow();
 
         }
 
@@ -85,4 +96,41 @@ public class MainActivity extends Activity {
             ;
         }.start();
     }
+
+    private void testWindow(){
+       WindowManager mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+      Button  mFloatingButton = new Button(this);
+        mFloatingButton.setText("click me");
+        WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, 0, 0,
+                PixelFormat.TRANSPARENT);
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+        mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        mLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
+        mLayoutParams.x = 100;
+        mLayoutParams.y = 300;
+        mFloatingButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        mWindowManager.addView(mFloatingButton, mLayoutParams);
+    }
+
+
+    private void permissionWindowRequest(){
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityForResult(intent, 1);
+            } else {
+//                testWindow();
+            }
+        }
+    }
+
 }

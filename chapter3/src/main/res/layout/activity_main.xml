@@ -27,6 +27,11 @@
         style="@style/AppTheme.Button.Green"
         android:onClick="onButtonClick"
         android:text="启动Intent service" />
+    <Button
+        android:id="@+id/button5"
+        style="@style/AppTheme.Button.Green"
+        android:onClick="onButtonClick"
+        android:text="window测试" />
 
     <TextView
         android:text="输入文本"
