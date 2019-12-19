@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.ryg.chapter_3.R;
 import com.ryg.chapter_3.chapter_11.LocalIntentService;
+import com.ryg.chapter_3.testThread.HandlerThreadActivity;
 
 public class MainActivity extends Activity {
 
@@ -65,7 +66,8 @@ public class MainActivity extends Activity {
         }else if (v.getId() == R.id.button5){
             permissionWindowRequest();
             testWindow();
-
+        }else if(v.getId()==R.id.button6){
+            startActivity(new Intent(this, HandlerThreadActivity.class));
         }
 
     }
